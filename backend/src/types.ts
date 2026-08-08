@@ -230,7 +230,7 @@ export interface PerformanceStats {
 
 // SSE Event Types
 export interface SSEEvent {
-  type: 'SIGNAL' | 'PRICE_UPDATE' | 'STATUS_UPDATE' | 'PERFORMANCE' | 'HEALTH' | 'SYSTEM' | 'MARKET_STATUS' | 'MARKET_INTELLIGENCE';
+  type: 'SIGNAL' | 'PRICE_UPDATE' | 'STATUS_UPDATE' | 'PERFORMANCE' | 'HEALTH' | 'SYSTEM' | 'MARKET_STATUS' | 'MARKET_INTELLIGENCE' | 'LIVE_PROGRESS';
   data: unknown;
   timestamp: number;
 }
