@@ -71,11 +71,9 @@ function Header({ health, prices }: { health: HealthStatus | null; prices: Marke
       <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: 8,
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
-            }}>📈</div>
+            <img src="/logo.png" style={{
+              width: 36, height: 36, borderRadius: 8, objectFit: 'cover',
+            }} alt="Logo" />
             <div>
               <div style={{ fontWeight: 800, fontSize: 15, letterSpacing: '-0.02em' }}>TradeSense AI</div>
               <div style={{ fontSize: 10, color: '#7c86a9', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Algorand Hackathon 2026</div>
