@@ -733,8 +733,7 @@ function JudgeDemoPanel({ onSignalGenerated }: { onSignalGenerated: (s: TradingS
       if (sig) {
         setLastSignalId(sig.id);
         onSignalGenerated(sig);
-        setProgress('signal', `✅ Live signal generated: ${sig.direction} ${sig.symbol}`);
-        setStage('outcome');
+        setProgress('done', `✅ Live signal generated: ${sig.direction} ${sig.symbol}`);
       } else {
         setStatus('No signal conditions met right now.');
         setStage('idle');
