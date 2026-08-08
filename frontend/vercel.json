@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://YOUR_BACKEND_URL.onrender.com/api/$1"
+      "destination": "https://trading-signal-bot-4bni.onrender.com/api/$1"
     }
   ]
 }
