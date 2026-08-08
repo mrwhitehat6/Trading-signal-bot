@@ -436,6 +436,7 @@ function SignalFeed({ signals }: { signals: TradingSignal[] }) {
               <th>Conf</th>
               <th>RR</th>
               <th>Status</th>
+              <th>AI</th>
               <th>Chain</th>
             </tr>
           </thead>
@@ -460,6 +461,11 @@ function SignalFeed({ signals }: { signals: TradingSignal[] }) {
                 <td style={{ fontFamily: 'monospace' }}>1:{s.riskReward?.toFixed(1)}</td>
                 <td><span className={statusBadge(s.status)}>{s.status}</span></td>
                 <td>
+                  <span title={s.aiExplanation || "No AI reasoning available"} style={{ cursor: 'help', fontSize: '14px' }}>
+                    🤖
+                  </span>
+                </td>
+                <td>
                   {s.algorandTxId ? (
                     <a
                       href={`https://testnet.explorer.perawallet.app/tx/${s.algorandTxId}`}
@@ -476,7 +482,7 @@ function SignalFeed({ signals }: { signals: TradingSignal[] }) {
             ))}
             {signals.length === 0 && (
               <tr>
-                <td colSpan={10} style={{ textAlign: 'center', color: '#4a5578', padding: '32px' }}>
+                <td colSpan={11} style={{ textAlign: 'center', color: '#4a5578', padding: '32px' }}>
                   No signals yet. Use the Demo Panel to generate one.
                 </td>
               </tr>
