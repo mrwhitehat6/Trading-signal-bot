@@ -1,0 +1,600 @@
+#pragma version 11
+#pragma typetrack false
+
+// @algorandfoundation/algorand-typescript/arc4/index.d.ts::Contract.approvalProgram() -> uint64:
+main:
+    intcblock 2 8 0 50
+    bytecblock "signal_" 0x0032 0x151f7c7580 0x151f7c75
+    // smart_contracts/trading_signal_registry/contract.algo.ts:22
+    // export class TradingSignalRegistry extends Contract {
+    txn NumAppArgs
+    bz main___algots__.defaultCreate@11
+    txn OnCompletion
+    !
+    assert
+    txn ApplicationID
+    assert
+    pushbytess 0xd053a2b7 0xfd64a5c9 0xb57f61e6 0xc81d1cda // method "createSignal(string,string,string,uint64,uint64,uint64,uint64,string,uint64)bool", method "getSignal(string)(string,string,uint64,uint64,uint64,uint64,string,uint64,string,string)", method "updateStatus(string,string,string)bool", method "signalExists(string)bool"
+    txna ApplicationArgs 0
+    match createSignal getSignal updateStatus signalExists
+    err
+
+main___algots__.defaultCreate@11:
+    // smart_contracts/trading_signal_registry/contract.algo.ts:22
+    // export class TradingSignalRegistry extends Contract {
+    txn OnCompletion
+    !
+    txn ApplicationID
+    !
+    &&
+    return
+
+
+// smart_contracts/trading_signal_registry/contract.algo.ts::TradingSignalRegistry.createSignal[routing]() -> void:
+createSignal:
+    // smart_contracts/trading_signal_registry/contract.algo.ts:27-37
+    // public createSignal(
+    //   signalId: string,
+    //   asset: string,
+    //   direction: string,
+    //   entry: uint64,
+    //   stopLoss: uint64,
+    //   takeProfit: uint64,
+    //   confidence: uint64,
+    //   strategy: string,
+    //   timestamp: uint64,
+    // ): boolean {
+    txna ApplicationArgs 1
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 3
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 4
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 5
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 6
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 7
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    txna ApplicationArgs 8
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 9
+    dup
+    len
+    intc_1 // 8
+    ==
+    assert // invalid number of bytes for arc4.uint64
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:23-25
+    // public signals = BoxMap<string, TradingSignal>({
+    //   keyPrefix: 'signal_',
+    // })
+    bytec_0 // "signal_"
+    uncover 9
+    concat
+    // smart_contracts/trading_signal_registry/contract.algo.ts:38
+    // assert(!this.signals(signalId).exists, 'Signal already exists')
+    dup
+    box_len
+    bury 1
+    !
+    assert // Signal already exists
+    // smart_contracts/trading_signal_registry/contract.algo.ts:40-51
+    // this.signals(signalId).value = {
+    //   asset,
+    //   direction,
+    //   entry,
+    //   stopLoss,
+    //   takeProfit,
+    //   confidence,
+    //   strategy,
+    //   timestamp,
+    //   status: 'ACTIVE',
+    //   outcome: 'PENDING',
+    // }
+    dig 8
+    len
+    itob
+    extract 6 2
+    uncover 9
+    concat
+    dup
+    len
+    intc_3 // 50
+    +
+    dig 9
+    len
+    itob
+    extract 6 2
+    uncover 10
+    concat
+    dig 1
+    itob
+    extract 6 2
+    bytec_1 // 0x0032
+    swap
+    concat
+    dig 1
+    len
+    uncover 3
+    +
+    uncover 10
+    itob
+    uncover 2
+    swap
+    concat
+    uncover 9
+    itob
+    concat
+    uncover 8
+    itob
+    concat
+    uncover 7
+    itob
+    concat
+    dig 6
+    len
+    itob
+    extract 6 2
+    uncover 7
+    concat
+    dig 2
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 1
+    len
+    uncover 3
+    +
+    uncover 6
+    itob
+    uncover 2
+    swap
+    concat
+    dig 1
+    itob
+    extract 6 2
+    concat
+    swap
+    intc_1 // 8
+    +
+    itob
+    extract 6 2
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    pushbytes 0x0006414354495645000750454e44494e47
+    concat
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/trading_signal_registry/contract.algo.ts:27-37
+    // public createSignal(
+    //   signalId: string,
+    //   asset: string,
+    //   direction: string,
+    //   entry: uint64,
+    //   stopLoss: uint64,
+    //   takeProfit: uint64,
+    //   confidence: uint64,
+    //   strategy: string,
+    //   timestamp: uint64,
+    // ): boolean {
+    bytec_2 // 0x151f7c7580
+    log
+    pushint 1
+    return
+
+
+// smart_contracts/trading_signal_registry/contract.algo.ts::TradingSignalRegistry.getSignal[routing]() -> void:
+getSignal:
+    // smart_contracts/trading_signal_registry/contract.algo.ts:56
+    // public getSignal(signalId: string): TradingSignal {
+    txna ApplicationArgs 1
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:23-25
+    // public signals = BoxMap<string, TradingSignal>({
+    //   keyPrefix: 'signal_',
+    // })
+    bytec_0 // "signal_"
+    swap
+    concat
+    // smart_contracts/trading_signal_registry/contract.algo.ts:57
+    // assert(this.signals(signalId).exists, 'Signal not found')
+    dup
+    box_len
+    bury 1
+    assert // Signal not found
+    // smart_contracts/trading_signal_registry/contract.algo.ts:58
+    // return this.signals(signalId).value
+    box_get
+    pop
+    // smart_contracts/trading_signal_registry/contract.algo.ts:56
+    // public getSignal(signalId: string): TradingSignal {
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    pushint 1
+    return
+
+
+// smart_contracts/trading_signal_registry/contract.algo.ts::TradingSignalRegistry.updateStatus[routing]() -> void:
+updateStatus:
+    // smart_contracts/trading_signal_registry/contract.algo.ts:61-65
+    // public updateStatus(
+    //   signalId: string,
+    //   status: string,
+    //   outcome: string,
+    // ): boolean {
+    txna ApplicationArgs 1
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 2
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    txna ApplicationArgs 3
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:23-25
+    // public signals = BoxMap<string, TradingSignal>({
+    //   keyPrefix: 'signal_',
+    // })
+    bytec_0 // "signal_"
+    uncover 3
+    concat
+    // smart_contracts/trading_signal_registry/contract.algo.ts:66
+    // assert(this.signals(signalId).exists, 'Signal not found')
+    dup
+    box_len
+    bury 1
+    assert // Signal not found
+    // smart_contracts/trading_signal_registry/contract.algo.ts:70
+    // asset: signal.asset,
+    dup
+    intc_3 // 50
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dig 1
+    intc_3 // 50
+    uncover 2
+    box_extract
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:71
+    // direction: signal.direction,
+    dig 1
+    intc_0 // 2
+    dup
+    box_extract
+    btoi
+    dig 2
+    dig 1
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dig 3
+    cover 2
+    box_extract
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:72
+    // entry: signal.entry,
+    dig 2
+    pushint 4
+    intc_1 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:73
+    // stopLoss: signal.stopLoss,
+    dig 3
+    pushint 12
+    intc_1 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:74
+    // takeProfit: signal.takeProfit,
+    dig 4
+    pushint 20
+    intc_1 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:75
+    // confidence: signal.confidence,
+    dig 5
+    pushint 28
+    intc_1 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:76
+    // strategy: signal.strategy,
+    dig 6
+    pushint 36
+    intc_0 // 2
+    box_extract
+    btoi
+    dig 7
+    dig 1
+    intc_0 // 2
+    box_extract
+    btoi
+    intc_0 // 2
+    +
+    dig 8
+    cover 2
+    box_extract
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:77
+    // timestamp: signal.timestamp,
+    dig 7
+    pushint 38
+    intc_1 // 8
+    box_extract // on error: index out of bounds
+    btoi
+    // smart_contracts/trading_signal_registry/contract.algo.ts:69-80
+    // this.signals(signalId).value = {
+    //   asset: signal.asset,
+    //   direction: signal.direction,
+    //   entry: signal.entry,
+    //   stopLoss: signal.stopLoss,
+    //   takeProfit: signal.takeProfit,
+    //   confidence: signal.confidence,
+    //   strategy: signal.strategy,
+    //   timestamp: signal.timestamp,
+    //   status: status,
+    //   outcome: outcome,
+    // }
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dup
+    len
+    intc_3 // 50
+    +
+    dig 8
+    len
+    itob
+    extract 6 2
+    uncover 9
+    concat
+    dig 1
+    itob
+    extract 6 2
+    bytec_1 // 0x0032
+    swap
+    concat
+    dig 1
+    len
+    uncover 3
+    +
+    uncover 9
+    itob
+    uncover 2
+    swap
+    concat
+    uncover 8
+    itob
+    concat
+    uncover 7
+    itob
+    concat
+    uncover 6
+    itob
+    concat
+    dig 5
+    len
+    itob
+    extract 6 2
+    uncover 6
+    concat
+    dig 2
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 1
+    len
+    uncover 3
+    +
+    uncover 5
+    itob
+    uncover 2
+    swap
+    concat
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    dig 2
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    dig 1
+    len
+    uncover 3
+    +
+    dig 7
+    len
+    itob
+    extract 6 2
+    uncover 8
+    concat
+    swap
+    itob
+    extract 6 2
+    uncover 2
+    swap
+    concat
+    uncover 5
+    concat
+    uncover 4
+    concat
+    uncover 3
+    concat
+    uncover 2
+    concat
+    swap
+    concat
+    dig 1
+    box_del
+    pop
+    box_put
+    // smart_contracts/trading_signal_registry/contract.algo.ts:61-65
+    // public updateStatus(
+    //   signalId: string,
+    //   status: string,
+    //   outcome: string,
+    // ): boolean {
+    bytec_2 // 0x151f7c7580
+    log
+    pushint 1
+    return
+
+
+// smart_contracts/trading_signal_registry/contract.algo.ts::TradingSignalRegistry.signalExists[routing]() -> void:
+signalExists:
+    // smart_contracts/trading_signal_registry/contract.algo.ts:85
+    // public signalExists(signalId: string): boolean {
+    txna ApplicationArgs 1
+    dup
+    intc_2 // 0
+    extract_uint16 // on error: invalid array length header
+    intc_0 // 2
+    +
+    dig 1
+    len
+    ==
+    assert // invalid number of bytes for arc4.dynamic_array<arc4.uint8>
+    extract 2 0
+    // smart_contracts/trading_signal_registry/contract.algo.ts:23-25
+    // public signals = BoxMap<string, TradingSignal>({
+    //   keyPrefix: 'signal_',
+    // })
+    bytec_0 // "signal_"
+    swap
+    concat
+    // smart_contracts/trading_signal_registry/contract.algo.ts:86
+    // return this.signals(signalId).exists
+    box_len
+    bury 1
+    // smart_contracts/trading_signal_registry/contract.algo.ts:85
+    // public signalExists(signalId: string): boolean {
+    pushbytes 0x00
+    intc_2 // 0
+    uncover 2
+    setbit
+    bytec_3 // 0x151f7c75
+    swap
+    concat
+    log
+    pushint 1
+    return
