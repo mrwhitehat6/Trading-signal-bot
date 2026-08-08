@@ -734,12 +734,19 @@ function JudgeDemoPanel({ onSignalGenerated }: { onSignalGenerated: (s: TradingS
         setLastSignalId(sig.id);
         onSignalGenerated(sig);
         setProgress('signal', `✅ Live signal generated: ${sig.direction} ${sig.symbol}`);
+        setStage('outcome');
       } else {
-        setStatus('No signal conditions met. Try Demo Signal for guaranteed result.');
+        setStatus('No signal conditions met right now.');
         setStage('idle');
       }
-    } catch (err) {
-      setStatus(`Error: ${String(err)}`);
+    } catch (err: any) {
+      if (err.response?.data?.stage) {
+        const apiErr = err.response.data;
+        setStatus(`Error [${apiErr.stage}]: ${apiErr.error}. ${apiErr.details || ''}`);
+      } else {
+        setStatus(`Error: ${err.message || String(err)}`);
+      }
+      setStage('idle');
     } finally {
       setLoading(null);
     }
@@ -920,6 +927,9 @@ export default function App() {
             }
             return [event.data, ...prev].slice(0, 50);
           });
+        }
+        if (event.type === 'LIVE_PROGRESS' && event.data) {
+          setProgress(event.data.stage as PipelineStage, event.data.message);
         }
         if (event.type === 'PRICE_UPDATE' && Array.isArray(event.data)) {
           setPrices(prev => {

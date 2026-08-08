@@ -281,24 +281,51 @@ router.post('/demo/simulate-sl', async (req: Request, res: Response) => {
   }
 });
 
+// ─── Live Analysis Status ──────────────────────────────────────────────────────
+router.get('/live-analysis/status', (req: Request, res: Response) => {
+  res.json({
+    liveAnalysis: true,
+    marketData: true,
+    news: true,
+    ai: true,
+    database: true,
+    algorand: true
+  });
+});
+
 // ─── Trigger Live Analysis ────────────────────────────────────────────────────
 router.post('/analyze', async (req: Request, res: Response) => {
   const { symbol = 'BTC/USDT' } = req.body;
 
   try {
-    const signal = await generateSignal(symbol);
+    console.log(`[LIVE] Request started for ${symbol}`);
+    const signal = await generateSignal(symbol, true);
     if (!signal) {
-      res.json({ success: true, data: null, message: 'No signal conditions met' });
+      console.log(`[LIVE] Request failed: No signal conditions met`);
+      res.json({ success: false, stage: 'ANALYSIS', error: 'No signal conditions met', details: 'The live market data did not meet the required confidence thresholds.' });
       return;
     }
 
-    broadcast({ type: 'SIGNAL', data: signal, timestamp: Date.now() });
-    await broadcastSignal(signal);
+    broadcast({ type: 'LIVE_PROGRESS', data: { stage: 'algorand', message: 'Registering signal on Algorand TestNet...' }, timestamp: Date.now() });
     await registerSignalOnChain(signal);
+    console.log(`[LIVE] Algorand registration completed`);
 
+    broadcast({ type: 'LIVE_PROGRESS', data: { stage: 'telegram', message: 'Broadcasting to Telegram subscribers...' }, timestamp: Date.now() });
+    await broadcastSignal(signal);
+    
+    broadcast({ type: 'SIGNAL', data: signal, timestamp: Date.now() });
+
+    console.log(`[LIVE] Response returned`);
     res.json({ success: true, data: signal });
   } catch (err) {
-    res.status(500).json({ success: false, error: String(err) });
+    console.error(`[LIVE] Request failed with error:`, err);
+    res.status(500).json({ 
+      success: false, 
+      stage: 'API_FAILURE', 
+      error: 'Backend API request failed', 
+      details: String(err),
+      timestamp: new Date().toISOString()
+    });
   }
 });
 

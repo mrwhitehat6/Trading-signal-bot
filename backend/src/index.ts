@@ -17,7 +17,21 @@ const DEMO_MODE = process.env.DEMO_MODE === 'true';
 const SCAN_INTERVAL_MS = parseInt(process.env.SCAN_INTERVAL_MS ?? '300000', 10); // 5 min default
 const SYMBOLS = (process.env.SYMBOLS ?? 'BTC/USDT,ETH/USDT').split(',').map(s => s.trim());
 
+// Env Validation
+const requiredVars = [
+  'BINANCE_API_KEY', 'BINANCE_API_SECRET', 'GEMINI_API_KEY',
+  'TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHANNEL_ID', 'ALGORAND_APP_ID',
+  'ALGORAND_NETWORK', 'ALGOD_SERVER', 'ALGOD_TOKEN', 'NEWS_API_KEY'
+];
+
 console.log(`[SYSTEM] Starting TradeSense AI`);
+console.log(`[SYSTEM] Validating environment variables...`);
+requiredVars.forEach(v => {
+  if (!process.env[v]) {
+    console.warn(`[WARNING] Missing environment variable: ${v}`);
+  }
+});
+
 console.log(`[SYSTEM] Network: ${process.env.ALGORAND_NETWORK ?? 'testnet'}`);
 console.log(`[SYSTEM] App ID: ${process.env.ALGORAND_APP_ID ?? '1008'}`);
 console.log(`[SYSTEM] Demo Mode: ${DEMO_MODE}`);
