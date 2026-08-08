@@ -76,7 +76,8 @@ export default function TradingChart({ symbol }: TradingChartProps) {
     // Fetch data
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/market/${encodeURIComponent(symbol)}/analysis`);
+        const API_BASE = import.meta.env.VITE_API_URL || '/api';
+        const res = await fetch(`${API_BASE}/market/${encodeURIComponent(symbol)}/analysis`);
         const result = await res.json();
         
         // Let's actually fetch historical OHLCV instead since /analysis doesn't return raw candles

@@ -888,7 +888,8 @@ export default function App() {
       // Load initial intelligence for primary symbol (BTC/USDT or first one)
       if (prs.length > 0) {
         const primarySymbol = prs[0].symbol;
-        fetch(`/api/market/${encodeURIComponent(primarySymbol)}/analysis`)
+        const API_BASE = import.meta.env.VITE_API_URL || '/api';
+        fetch(`${API_BASE}/market/${encodeURIComponent(primarySymbol)}/analysis`)
           .then(res => res.json())
           .then(data => {
             if (data.success) {
@@ -902,7 +903,8 @@ export default function App() {
 
   // SSE connection
   useEffect(() => {
-    const es = new EventSource('/api/events');
+    const API_BASE = import.meta.env.VITE_API_URL || '/api';
+    const es = new EventSource(`${API_BASE}/events`);
     eventSourceRef.current = es;
 
     es.onopen = () => setConnected(true);

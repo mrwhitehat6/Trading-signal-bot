@@ -16,7 +16,8 @@ export default function NewsIntelligencePanel({ symbol }: Props) {
     async function fetchNews() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/news/${encodeURIComponent(symbol)}`);
+        const API_BASE = import.meta.env.VITE_API_URL || '/api';
+        const res = await fetch(`${API_BASE}/news/${encodeURIComponent(symbol)}`);
         const json = await res.json();
         
         if (mounted) {
